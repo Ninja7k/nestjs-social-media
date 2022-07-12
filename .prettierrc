@@ -1,0 +1,7 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all", 
+  "width": 120,
+  "semi": true,
+  "useTables": false
+}
