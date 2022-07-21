@@ -9,7 +9,7 @@ export class Users1657568846085 implements MigrationInterface {
                     {
                         name: 'id',
                         type: 'varchar',
-                        length: '36',
+                        length: '255',
                         isNullable: false,
                         isPrimary: true,
                         default: 'uuid()',
@@ -43,6 +43,22 @@ export class Users1657568846085 implements MigrationInterface {
                         type: 'varchar',
                         length: '255',
                         isNullable: false,
+                    },
+                    {
+                        name: 'created_at',
+                        type: 'datetime',
+                        isNullable: false,
+                        default: 'now()',
+                    },
+                    {
+                        name: 'updated_at',
+                        type: 'datetime',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'deleted_at',
+                        type: 'datetime',
+                        isNullable: true,
                     },
                 ],
             }),
