@@ -13,14 +13,21 @@ import { Delete } from '@nestjs/common';
 import { Param } from '@nestjs/common';
 import { Post } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
+import { StringDataType } from 'sequelize/types';
+import { PostsModule } from '../posts/posts.module';
+import { PostsService } from '../posts/posts.service';
 import { PatchUserDto } from './dto/patch-user.dto';
+import { StorePostDto } from '../posts/dto/store-post.dto';
 import { StoreUserDto } from './dto/store-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
-@Controller('api/v1/users')
+@Controller('app/v1/users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(
+        private readonly usersService: UsersService,
+        private readonly postsService: PostsService,
+    ) {}
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Get()
@@ -58,5 +65,21 @@ export class UsersController {
     @HttpCode(HttpStatus.NO_CONTENT)
     async destroy(@Param('id') id: string) {
         return this.usersService.destroy(id);
+    }
+
+    @Post(':id/posts')
+    async storePost(
+        @Param('id', new ParseUUIDPipe()) id: string,
+        @Body() body: StorePostDto,
+    ) {
+        return this.postsService.store(id, body);
+    }
+
+    @Get(':id/posts')
+    async idexPosts(
+        @Param('id', new ParseUUIDPipe()) id: string,
+        @Body() body,
+    ) {
+        return this.postsService.index({ userId: id });
     }
 }
